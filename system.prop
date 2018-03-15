@@ -118,7 +118,7 @@ ro.vendor.at_library=libqti-at.so
 ro.vendor.gt_library=libqti-gt.so
 
 #property for game detection feature
-debug.enable.gamed=0
+vendor.debug.enable.gamed=0
 
 #property to enable narrow search range for video encoding
 vendor.vidc.enc.narrow.searchrange=1
