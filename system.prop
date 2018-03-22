@@ -22,6 +22,7 @@ ro.telephony.default_network=22,20
 
 debug.sf.enable_hwc_vds=1
 debug.sf.hw=0
+debug.sf.latch_unsignaled=1
 debug.egl.hw=0
 persist.hwc.mdpcomp.enable=true
 debug.mdpcomp.logs=0
@@ -29,6 +30,8 @@ dalvik.vm.heapsize=36m
 dev.pm.dyn_samplingrate=1
 persist.demo.hdmirotationlock=false
 debug.enable.sglscale=1
+sdm.debug.disable_skip_validate=1
+debug.sf.recomputecrop=0
 
 #ro.hdmi.enable=true
 #tunnel.decode=true
@@ -42,7 +45,7 @@ media.msm8956hw=0
 mm.enable.smoothstreaming=true
 mmp.enable.3g2=true
 media.aac_51_output_enabled=true
-
+media.settings.xml=/vendor/etc/media_profiles_vendor.xml
 #codecs:(PARSER_)AAC AC3 AMR_NB AMR_WB ASF AVI DTS FLV 3GP 3G2 MKV MP2PS MP2TS MP3 OGG QCP WAV FLAC AIFF APE
 mm.enable.qcom_parser=1048575
 
@@ -54,16 +57,6 @@ vendor.vidc.disable.split.mode=1
 
 # system property to accelerate Progressive Download using STA
 persist.mm.sta.enable=0
-
-
-#
-# system props for the camera
-#
-# preferred IS type for 8937 is IS_TYPE_DIS i.e, 1
-# IS_TYPE_NONE=0, IS_TYPE_DIS=1, IS_TYPE_GA_DIS=2, IS_TYPE_EIS_1_0=3, IS_TYPE_EIS_2_0=4 IS_TYPE_MAX=5
-#
-persist.camera.is_type=1
-persist.camera.gyro.android=1
 
 #
 # system props for the data modules
@@ -84,6 +77,9 @@ persist.timed.enable=true
 
 # System property for cabl
 ro.qualcomm.cabl=2
+
+# Property to enable display default color mode
+vendor.display.enable_default_color_mode=1
 
 #
 # System props for telephony
@@ -174,8 +170,8 @@ ro.emmc_size=16GB
 camera.hal1.packagelist=com.skype.raider,com.google.android.talk
 
 #properties for limiting preview size in camera
-camera.display.umax=1920x1080
-camera.display.lmax=1280x720
+persist.vendor.camera.display.umax=1920x1080
+persist.vendor.camera.display.lmax=1280x720
 
 #set cutoff voltage to 3400mV
 ro.cutoff_voltage_mv=3400

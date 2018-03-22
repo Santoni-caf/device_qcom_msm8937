@@ -19,16 +19,24 @@ endif
 # Compile Linux Kernel
 #----------------------------------------------------------------------
 ifeq ($(KERNEL_DEFCONFIG),)
-    ifeq ($(TARGET_BUILD_VARIANT),user)
-      KERNEL_DEFCONFIG := msm8937-perf_defconfig
-    else
-      KERNEL_DEFCONFIG := msm8937_defconfig
+    ifneq ($(wildcard kernel/msm-3.18),)
+        ifeq ($(TARGET_BUILD_VARIANT),user)
+          KERNEL_DEFCONFIG := msm8937-perf_defconfig
+        else
+          KERNEL_DEFCONFIG := msm8937_defconfig
+        endif
+    else ifneq ($(wildcard kernel/msm-4.9),)
+        ifeq ($(TARGET_BUILD_VARIANT),user)
+          KERNEL_DEFCONFIG := msm8953-perf_defconfig
+        else
+          KERNEL_DEFCONFIG := msm8953_defconfig
+        endif
     endif
 endif
+
 ifeq ($(TARGET_KERNEL_SOURCE),)
      TARGET_KERNEL_SOURCE := kernel
 endif
-
 include $(TARGET_KERNEL_SOURCE)/AndroidKernel.mk
 
 $(INSTALLED_KERNEL_TARGET): $(TARGET_PREBUILT_KERNEL) | $(ACP)
@@ -49,7 +57,7 @@ LOCAL_MODULE       := init.target.rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := $(LOCAL_MODULE)
-LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -64,10 +72,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := fstab.qcom
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := $(LOCAL_MODULE)
-LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
-ifeq ($(ENABLE_VENDOR_IMAGE), true)
-LOCAL_POST_INSTALL_CMD := echo $(VENDOR_FSTAB_ENTRY) >> $(TARGET_ROOT_OUT)/$(LOCAL_MODULE)
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
+ifeq ($(ENABLE_AB), true)
+  LOCAL_SRC_FILES    := fstab_AB_variant.qti
+else
+  LOCAL_SRC_FILES    := fstab_non_AB_variant.qti
 endif
 include $(BUILD_PREBUILT)
 
@@ -117,7 +126,7 @@ LOCAL_MODULE       := wpa_supplicant_overlay.conf
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := $(LOCAL_MODULE)
-LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)/wifi
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR)/etc/wifi
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -125,7 +134,7 @@ LOCAL_MODULE       := p2p_supplicant_overlay.conf
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := $(LOCAL_MODULE)
-LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)/wifi
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR)/etc/wifi
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -153,13 +162,13 @@ LOCAL_SRC_FILES    := hostapd.deny
 include $(BUILD_PREBUILT)
 
 #Create symbolic links
-$(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wlan/prima; \
+$(shell mkdir -p $(TARGET_OUT_VENDOR)/firmware/wlan/prima; \
         ln -sf /persist/WCNSS_qcom_wlan_nv.bin \
-        $(TARGET_OUT_ETC)/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin; \
+	$(TARGET_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin; \
         ln -sf /persist/WCNSS_wlan_dictionary.dat \
-        $(TARGET_OUT_ETC)/firmware/wlan/prima/WCNSS_wlan_dictionary.dat; \
+	$(TARGET_OUT_VENDOR)/firmware/wlan/prima/WCNSS_wlan_dictionary.dat; \
         ln -sf /data/misc/wifi/WCNSS_qcom_cfg.ini \
-        $(TARGET_OUT_ETC)/firmware/wlan/prima/WCNSS_qcom_cfg.ini)
+	$(TARGET_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_cfg.ini)
 endif
 
 #----------------------------------------------------------------------
