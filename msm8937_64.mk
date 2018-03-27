@@ -1,3 +1,8 @@
+# Enable AVB 2.0
+ifneq ($(wildcard kernel/msm-4.9),)
+BOARD_AVB_ENABLE := true
+endif
+
 TARGET_USES_AOSP := true
 TARGET_USES_AOSP_FOR_AUDIO := false
 TARGET_USES_QCOM_BSP := false
@@ -217,11 +222,6 @@ PRODUCT_PACKAGES += \
  PRODUCT_COPY_FILES += \
      device/qcom/msm8937_64/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
 
-PRODUCT_SUPPORTS_VERITY := true
-PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/bootdevice/by-name/system
-ifeq ($(ENABLE_VENDOR_IMAGE), true)
-PRODUCT_VENDOR_VERITY_PARTITION := /dev/block/bootdevice/by-name/vendor
-endif
 
 # Enable logdumpd service only for non-perf bootimage
 ifeq ($(findstring perf,$(KERNEL_DEFCONFIG)),)
@@ -304,4 +304,11 @@ PRODUCT_PACKAGES += update_engine \
                    android.hardware.boot@1.0-service
 #Boot control HAL test app
 PRODUCT_PACKAGES_DEBUG += bootctl
+endif
+
+# When AVB 2.0 is enabled, dm-verity is enabled differently,
+# below definitions are only required for AVB 1.0
+ifeq ($(BOARD_AVB_ENABLE),false)
+# dm-verity definitions
+  PRODUCT_SUPPORTS_VERITY := true
 endif
