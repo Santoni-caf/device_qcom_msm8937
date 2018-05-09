@@ -40,6 +40,8 @@ cmnlib.mbn              /dev/block/bootdevice/by-name/cmnlib
 cmnlib64.mbn            /dev/block/bootdevice/by-name/cmnlib64
 keymaster.mbn           /dev/block/bootdevice/by-name/keymaster
 mdtp.img                /dev/block/bootdevice/by-name/mdtp
+vbmeta.img              /dev/block/bootdevice/by-name/vbmeta
+dtbo.img                /dev/block/bootdevice/by-name/dtbo
 
 # filename + .bak       backup partition
 
@@ -52,6 +54,8 @@ lksecapp.mbn.bak        /dev/block/bootdevice/by-name/lksecappbak
 cmnlib.mbn.bak          /dev/block/bootdevice/by-name/cmnlibbak
 cmnlib64.mbn.bak        /dev/block/bootdevice/by-name/cmnlib64bak
 keymaster.mbn.bak       /dev/block/bootdevice/by-name/keymasterbak
+vbmeta.img.bak          /dev/block/bootdevice/by-name/vbmetabak
+dtbo.img.bak            /dev/block/bootdevice/by-name/dtbobak
 
 # For multiple file firmware images that differ from *.mbn and *.bin
 # you can specify filename.* to direct all files to the same location.
