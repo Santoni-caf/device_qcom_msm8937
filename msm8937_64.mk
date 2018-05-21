@@ -19,7 +19,6 @@ ifeq ($(ENABLE_VENDOR_IMAGE), true)
 #TARGET_USES_QTIC := false
 endif
 
-BOARD_HAVE_QCOM_FM := true
 
 TARGET_USES_NQ_NFC := true
 
@@ -90,10 +89,6 @@ PRODUCT_BOOT_JARS += WfdCommon
 #Android oem shutdown hook
 PRODUCT_BOOT_JARS += oem-services
 endif
-
-ifeq ($(strip $(BOARD_HAVE_QCOM_FM)),true)
-PRODUCT_BOOT_JARS += qcom.fmradio
-endif #BOARD_HAVE_QCOM_FM
 
 DEVICE_MANIFEST_FILE := device/qcom/msm8937_64/manifest.xml
 DEVICE_MATRIX_FILE   := device/qcom/common/compatibility_matrix.xml
