@@ -201,9 +201,8 @@ PRODUCT_COPY_FILES += \
      device/qcom/msm8937_64/powerhint.xml:system/etc/powerhint.xml
 
 #Healthd packages
-PRODUCT_PACKAGES += android.hardware.health@1.0-impl \
-                   android.hardware.health@1.0-convert \
-                   android.hardware.health@1.0-service \
+PRODUCT_PACKAGES += android.hardware.health@2.0-impl \
+                   android.hardware.health@2.0-service \
                    libhealthd.msm
 
 PRODUCT_FULL_TREBLE_OVERRIDE := true
