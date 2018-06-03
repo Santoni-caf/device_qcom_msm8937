@@ -5,7 +5,7 @@ BOARD_AVB_ENABLE := true
 endif
 
 TARGET_USES_AOSP := true
-TARGET_USES_AOSP_FOR_AUDIO := true
+TARGET_USES_AOSP_FOR_AUDIO := false
 TARGET_USES_QCOM_BSP := false
 
 ifeq ($(TARGET_USES_AOSP),true)
