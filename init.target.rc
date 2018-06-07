@@ -214,7 +214,7 @@ service imsstarter /vendor/bin/init.qti.ims.sh
 on property:vold.decrypt=trigger_restart_framework
     start imsstarter
 
-## imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
+## imsqmidaemon starts with root and UID will be downgraded to SYSTEM.
 service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
     class main
     user system
@@ -223,7 +223,7 @@ service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
     disabled
 
 on property:service.qti.ims.enabled=1
-    start imsqmidaemon
+    start vendor.imsqmidaemon
 
 # imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
 service vendor.imsdatadaemon /system/vendor/bin/imsdatadaemon
