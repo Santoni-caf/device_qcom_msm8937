@@ -222,7 +222,7 @@ service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
     group radio log diag
     disabled
 
-on property:service.qti.ims.enabled=1
+on property:vendor.service.qti.ims.enabled=1
     start vendor.imsqmidaemon
 
 # imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
