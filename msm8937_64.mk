@@ -356,6 +356,10 @@ endif
 TARGET_MOUNT_POINTS_SYMLINKS := false
 
 SDM660_DISABLE_MODULE := true
+
+#Property for enabling learning module
+PRODUCT_PROPERTY_OVERRIDES += vendor.debug.enable.lm=1
+
 # When AVB 2.0 is enabled, dm-verity is enabled differently,
 # below definitions are only required for AVB 1.0
 ifeq ($(BOARD_AVB_ENABLE),false)
