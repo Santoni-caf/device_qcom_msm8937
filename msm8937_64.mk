@@ -27,6 +27,11 @@ endif
 
 TARGET_USES_NQ_NFC := true
 
+ifeq ($(TARGET_USES_NQ_NFC),true)
+PRODUCT_COPY_FILES += \
+    device/qcom/common/nfc/libnfc-brcm.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nci.conf
+endif
+
 ENABLE_AB ?= false
 
 ifneq ($(wildcard kernel/msm-3.18),)
