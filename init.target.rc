@@ -195,6 +195,9 @@ on boot
     chown system system /persist/speccfg/submask
     chown system system /persist/speccfg/partition
 
+# access permission for wlan
+    chown system system /mnt/vendor/persist/WCNSS_qcom_wlan_nv.bin
+
 #USB controller configuration
     setprop vendor.usb.rndis.func.name "rndis"
     setprop vendor.usb.rmnet.func.name "rmnet_bam"
