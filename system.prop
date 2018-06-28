@@ -59,7 +59,7 @@ media.settings.xml=/vendor/etc/media_profiles_vendor.xml
 vendor.mm.enable.qcom_parser=1048575
 
 # system prop for UBWC
-video.disable.ubwc=1
+vendor.video.disable.ubwc=1
 
 # system prop to disable split mode
 vendor.vidc.disable.split.mode=1
