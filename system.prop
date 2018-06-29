@@ -77,6 +77,10 @@ persist.vendor.data.mode=concurrent
 #system props for time-services
 persist.timed.enable=true
 
+#system prop for Bluetooth SOC type
+ro.bluetooth.library_name=libbluetooth_qti.so
+persist.vendor.btstack.enable.splita2dp=false
+
 #
 # system prop for opengles version
 #
