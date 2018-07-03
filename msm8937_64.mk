@@ -308,3 +308,8 @@ ifeq ($(BOARD_AVB_ENABLE),false)
 # dm-verity definitions
   PRODUCT_SUPPORTS_VERITY := true
 endif
+
+ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
+    # Enable vndk-sp Libraries
+    PRODUCT_PACKAGES += vndk_package
+endif
