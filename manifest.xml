@@ -254,16 +254,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
        </interface>
     </hal>
     <hal format="hidl">
-        <name>android.hardware.radio.deprecated</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IOemHook</name>
-            <instance>slot1</instance>
-            <instance>slot2</instance>
-        </interface>
-    </hal>
-    <hal format="hidl">
        <name>vendor.qti.hardware.radio.am</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
@@ -334,15 +324,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <interface>
             <name>ILocHidlGnss</name>
             <instance>gnss_vendor</instance>
-        </interface>
-    </hal>
-    <hal format="hidl">
-        <name>vendor.qti.hardware.radio.atcmdfwd</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IAtCmdFwd</name>
-            <instance>AtCmdFwdService</instance>
         </interface>
     </hal>
     <hal format="hidl">
@@ -484,16 +465,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                <name>IQtiOemHook</name>
                <instance>oemhook0</instance>
                <instance>oemhook1</instance>
-           </interface>
-    </hal>
-    <hal format="hidl">
-        <name>vendor.qti.hardware.radio.config</name>
-           <transport>hwbinder</transport>
-           <version>1.0</version>
-           <interface>
-               <name>IConfig</name>
-               <instance>radioconfig0</instance>
-               <instance>radioconfig1</instance>
            </interface>
     </hal>
 
