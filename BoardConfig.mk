@@ -254,4 +254,7 @@ BOARD_VNDK_VERSION := current
 endif
 
 TARGET_ENABLE_MEDIADRM_64 := true
+
+ifeq ($(TARGET_KERNEL_VERSION), 4.9)
 TARGET_USES_LM := true
+endif
