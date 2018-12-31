@@ -138,20 +138,12 @@ persist.console.silent.config=1
 
 #property for vendor specific library
 ro.vendor.at_library=libqti-at.so
-ro.vendor.gt_library=libqti-gt.so
-
-#property for game detection feature
-vendor.debug.enable.gamed=0
 
 #property to enable narrow search range for video encoding
 vendor.vidc.enc.narrow.searchrange=1
 
 #property to enable fingerprint
 persist.qfp=false
-
-#min/max cpu in core control
-ro.vendor.qti.core_ctl_min_cpu=2
-ro.vendor.qti.core_ctl_max_cpu=4
 
 #HWUI properties
 ro.hwui.texture_cache_size=72
