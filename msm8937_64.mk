@@ -65,9 +65,6 @@ PRODUCT_COPY_FILES += device/qcom/msm8937_32/media/media_profiles_8937.xml:syste
                       device/qcom/msm8937_32/media/media_codecs_vendor_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_vendor_audio.xml
 endif
 
-PRODUCT_COPY_FILES += device/qcom/msm8937_64/whitelistedapps.xml:system/etc/whitelistedapps.xml \
-                      device/qcom/msm8937_64/gamedwhitelist.xml:system/etc/gamedwhitelist.xml
-
 # video seccomp policy files
 PRODUCT_COPY_FILES += \
     device/qcom/msm8937_32/seccomp/mediacodec-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
@@ -384,3 +381,11 @@ ifeq ($(strip $(TARGET_KERNEL_VERSION)), 3.18)
     ENABLE_EXTRA_VENDOR_LIBS := true
     PRODUCT_PACKAGES += vendor-extra-libs
 endif
+
+
+###################################################################################
+# This is the End of target.mk file.
+# Now, Pickup other split product.mk files:
+###################################################################################
+$(call inherit-product-if-exists, vendor/qcom/defs/product-defs/legacy/*.mk)
+###################################################################################
