@@ -103,7 +103,7 @@ DEVICE_MANIFEST_FILE := device/qcom/msm8937_64/manifest.xml
 DEVICE_MATRIX_FILE   := device/qcom/common/compatibility_matrix.xml
 DEVICE_FRAMEWORK_MANIFEST_FILE := device/qcom/msm8937_64/framework_manifest.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
-    device/qcom/common/vendor_framework_compatibility_matrix.xml
+    vendor/qcom/opensource/core-utils/vendor_framework_compatibility_matrix.xml
 # default is nosdcard, S/W button enabled in resource
 PRODUCT_CHARACTERISTICS := nosdcard
 
@@ -350,16 +350,20 @@ PRODUCT_PACKAGES += update_engine \
                    android.hardware.boot@1.0-service
 #Boot control HAL test app
 PRODUCT_PACKAGES_DEBUG += bootctl
+
+PRODUCT_STATIC_BOOT_CONTROL_HAL := \
+  bootctrl.msm8937 \
+  librecovery_updater_msm \
+  libz \
+  libcutils
+
+PRODUCT_PACKAGES += \
+  update_engine_sideload
 endif
 
 TARGET_MOUNT_POINTS_SYMLINKS := false
 
 SDM660_DISABLE_MODULE := true
-
-#Property for enabling learning module
-ifneq ($(wildcard kernel/msm-4.9),)
-PRODUCT_PROPERTY_OVERRIDES += vendor.debug.enable.lm=1
-endif
 
 # When AVB 2.0 is enabled, dm-verity is enabled differently,
 # below definitions are only required for AVB 1.0
