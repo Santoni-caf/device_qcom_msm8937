@@ -10,6 +10,8 @@ TARGET_BOOTLOADER_BOARD_NAME := QC_Reference_Phone
 TARGET_COMPILE_WITH_MSM_KERNEL := true
 TARGET_KERNEL_APPEND_DTB := true
 BOARD_USES_GENERIC_AUDIO := true
+# TODO(b/124534788): Temporarily allow eng and debug LOCAL_MODULE_TAGS
+BUILD_BROKEN_ENG_DEBUG_TAGS:=true
 
 -include $(QCPATH)/common/msm8937_64/BoardConfigVendor.mk
 
