@@ -80,6 +80,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
 $(call inherit-product, device/qcom/common/common64.mk)
 
+#Property to enable Swap
+PRODUCT_PROPERTY_OVERRIDES += ro.vendor.qti.config.swap=1
+
 PRODUCT_NAME := msm8937_64
 PRODUCT_DEVICE := msm8937_64
 PRODUCT_BRAND := Android
