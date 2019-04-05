@@ -214,3 +214,10 @@ endif
 # extra images
 #----------------------------------------------------------------------
 include device/qcom/common/generate_extra_images.mk
+
+#----------------------------------------------------------------------
+# override default make with prebuilt make path (if any)
+#----------------------------------------------------------------------
+ifneq (, $(wildcard $(shell pwd)/prebuilts/build-tools/linux-x86/bin/make))
+    MAKE := $(shell pwd)/prebuilts/build-tools/linux-x86/bin/$(MAKE)
+endif
