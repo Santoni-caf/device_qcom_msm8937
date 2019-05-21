@@ -80,6 +80,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
 $(call inherit-product, device/qcom/common/common64.mk)
 
+#Property to enable Swap
+PRODUCT_PROPERTY_OVERRIDES += ro.vendor.qti.config.swap=1
+
 PRODUCT_NAME := msm8937_64
 PRODUCT_DEVICE := msm8937_64
 PRODUCT_BRAND := Android
@@ -396,6 +399,10 @@ WLAN_BRINGUP_NEW_SP := true
 DISP_BRINGUP_NEW_SP := true
 CAM_BRINGUP_NEW_SP := true
 SEC_USERSPACE_BRINGUP_NEW_SP := true
+
+# Enable telephpony ims feature
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml
 
 ###################################################################################
 # This is the End of target.mk file.
