@@ -195,6 +195,7 @@ on boot
     setprop vendor.usb.rmnet.func.name "rmnet_bam"
     setprop vendor.usb.rmnet.inst.name "rmnet_bam_dmux"
     setprop vendor.usb.dpl.inst.name "dpl_bam_dmux"
+    setprop vendor.usb.qdss.inst.name "qdss"
 
 service wcnss-service /system/vendor/bin/wcnss_service
     class main
@@ -278,6 +279,7 @@ on charger
     start qcom-post-boot
     setprop persist.sys.usb.config mass_storage
     start vendor.hvdcp_opti
+    start vendor.vm_bms
 
 service hbtp /system/vendor/bin/hbtp_daemon
     class main
@@ -323,6 +325,11 @@ on property:sys.shutdown.requested=*
     stop vendor.per_proxy
 
 service vendor.hvdcp_opti /vendor/bin/hvdcp_opti
+    class main
+    user root
+    group system wakelock
+
+service vendor.vm_bms /vendor/bin/vm_bms
     class main
     user root
     group system wakelock
