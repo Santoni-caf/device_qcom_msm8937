@@ -1,7 +1,33 @@
 ALLOW_MISSING_DEPENDENCIES=true
+
+# Default A/B configuration.
+ENABLE_AB ?= false
+
+# Dynamic-partition disabled by default
+BOARD_DYNAMIC_PARTITION_ENABLE ?= false
+
+ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+PRODUCT_PACKAGES += fastbootd
+ifeq ($(ENABLE_AB), true)
+PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstabs-4.9/fstab_AB_dynamic_partition_variant.qti:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+else
+PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstabs-4.9/fstab_non_AB_dynamic_partition_variant.qti:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+endif
+endif
+
 # Enable AVB 2.0
 ifneq ($(wildcard kernel/msm-4.9),)
 BOARD_AVB_ENABLE := true
+
+ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
+# enable vbmeta_system
+BOARD_AVB_VBMETA_SYSTEM := system
+BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
+BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA2048
+BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 2
+endif
 endif
 
 TARGET_USES_AOSP := false
