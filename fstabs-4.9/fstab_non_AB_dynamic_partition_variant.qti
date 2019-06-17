@@ -33,7 +33,7 @@
 # Currently we dont have e2fsck compiled. So fs check would failed.
 
 #<src>                                      <mnt_point>        <type>  <mnt_flags and options>                     <fs_mgr_flags>
-system        /system          ext4    ro,barrier=1,discard                        wait,avb=vbmeta_system,logical,first_stage_mount
+system        /system          ext4    ro,barrier=1,discard                        wait,avb=vbmeta_system,logical,first_stage_mount,avb_keys=/avb/q-gsi.avbpubkey:/avb/r-gsi.avbpubkey:/avb/s-gsi.avbpubkey
 vendor        /vendor          ext4    ro,barrier=1,discard                        wait,avb,logical,first_stage_mount
 /dev/block/bootdevice/by-name/userdata       /data              ext4    noatime,nosuid,nodev,barrier=1,noauto_da_alloc,discard  wait,fileencryption=ice,quota,reservedsize=128M
 /devices/soc/7864900.sdhci/mmc_host*         /storage/sdcard1   vfat    nosuid,nodev                                wait,voldmanaged=sdcard1:auto,noemulatedsd,encryptable=footer
