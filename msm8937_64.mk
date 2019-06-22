@@ -112,7 +112,7 @@ PRODUCT_PROPERTY_OVERRIDES += ro.vendor.qti.config.swap=1
 
 PRODUCT_NAME := msm8937_64
 PRODUCT_DEVICE := msm8937_64
-PRODUCT_BRAND := Android
+PRODUCT_BRAND := qti
 PRODUCT_MODEL := msm8937 for arm64
 
 PRODUCT_BOOT_JARS += tcmiface
