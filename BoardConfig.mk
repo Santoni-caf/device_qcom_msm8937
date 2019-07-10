@@ -293,11 +293,12 @@ endif
 
 TARGET_ENABLE_MEDIADRM_64 := true
 
+# Set Header version for bootimage
+BOARD_BOOTIMG_HEADER_VERSION := 1
+BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
+
 ifneq ($(ENABLE_AB),true)
     ifeq ($(BOARD_KERNEL_SEPARATED_DTBO),true)
-        # Set Header version for bootimage
-        BOARD_BOOTIMG_HEADER_VERSION := 1
-        BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
         # Enable DTBO for recovery image
         BOARD_INCLUDE_RECOVERY_DTBO := true
     endif
