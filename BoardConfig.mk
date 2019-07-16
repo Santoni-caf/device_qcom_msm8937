@@ -92,9 +92,11 @@ AB_OTA_UPDATER := true
 # Full A/B partiton update set
 #   AB_OTA_PARTITIONS := xbl rpm tz hyp pmic modem abl boot keymaster cmnlib cmnlib64 system bluetooth
 # Subset A/B partitions for Android-only image update
-AB_OTA_PARTITIONS ?= boot system
-TARGET_NO_RECOVERY := true
-BOARD_USES_RECOVERY_AS_BOOT := true
+    ifeq ($(ENABLE_VENDOR_IMAGE), true)
+      AB_OTA_PARTITIONS ?= boot system vendor
+    else
+      AB_OTA_PARTITIONS ?= boot system
+    endif
 else
 BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
