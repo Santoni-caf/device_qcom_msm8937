@@ -3,6 +3,13 @@
 # Product-specific compile-time definitions.
 #
 
+#Generate DTBO image
+ifeq ($(TARGET_KERNEL_VERSION), 4.9)
+BOARD_KERNEL_SEPARATED_DTBO := true
+BOARD_SYSTEMSDK_VERSIONS :=28
+BOARD_VNDK_VERSION := current
+endif
+
 ### Dynamic partition Handling
 ifneq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
   ifeq ($(ENABLE_VENDOR_IMAGE), true)
@@ -15,6 +22,10 @@ ifneq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
       BOARD_USES_RECOVERY_AS_BOOT := true
   else
       BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x04000000
+      ifeq ($(BOARD_KERNEL_SEPARATED_DTBO),true)
+        # Enable DTBO for recovery image
+        BOARD_INCLUDE_RECOVERY_DTBO := true
+      endif
   endif
 else
   # Define the Dynamic Partition sizes and groups.
@@ -22,6 +33,10 @@ else
     BOARD_SUPER_PARTITION_SIZE := 12884901888
   else
     BOARD_SUPER_PARTITION_SIZE := 5318967296
+  endif
+  ifeq ($(BOARD_KERNEL_SEPARATED_DTBO),true)
+    # Enable DTBO for recovery image
+    BOARD_INCLUDE_RECOVERY_DTBO := true
   endif
   BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
   BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 5314772992
@@ -287,25 +302,12 @@ ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
 PMIC_QG_SUPPORT := true
 endif
 
-#Generate DTBO image
-ifeq ($(TARGET_KERNEL_VERSION), 4.9)
-BOARD_KERNEL_SEPARATED_DTBO := true
-BOARD_SYSTEMSDK_VERSIONS :=28
-BOARD_VNDK_VERSION := current
-endif
-
 TARGET_ENABLE_MEDIADRM_64 := true
 
 # Set Header version for bootimage
 BOARD_BOOTIMG_HEADER_VERSION := 1
 BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 
-ifneq ($(ENABLE_AB),true)
-    ifeq ($(BOARD_KERNEL_SEPARATED_DTBO),true)
-        # Enable DTBO for recovery image
-        BOARD_INCLUDE_RECOVERY_DTBO := true
-    endif
-endif
 #################################################################################
 # This is the End of BoardConfig.mk file.
 # Now, Pickup other split Board.mk files:
