@@ -28,6 +28,10 @@ ifneq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
       endif
   endif
 else
+  # Product partition support
+  TARGET_COPY_OUT_PRODUCT := product
+  BOARD_USES_PRODUCTIMAGE := true
+  BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
   # Define the Dynamic Partition sizes and groups.
   ifeq ($(ENABLE_AB), true)
     BOARD_SUPER_PARTITION_SIZE := 12884901888
@@ -40,7 +44,7 @@ else
   endif
   BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
   BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 5314772992
-  BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor
+  BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system product vendor
   BOARD_EXT4_SHARE_DUP_BLOCKS := true
   BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 endif
