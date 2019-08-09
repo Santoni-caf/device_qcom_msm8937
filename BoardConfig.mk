@@ -58,6 +58,7 @@ TARGET_BOARD_PLATFORM := msm8937
 TARGET_BOOTLOADER_BOARD_NAME := QC_Reference_Phone
 
 TARGET_COMPILE_WITH_MSM_KERNEL := true
+#Enable appended dtb.
 TARGET_KERNEL_APPEND_DTB := true
 BOARD_USES_GENERIC_AUDIO := true
 # TODO(b/124534788): Temporarily allow eng and debug LOCAL_MODULE_TAGS
@@ -304,9 +305,18 @@ endif
 
 TARGET_ENABLE_MEDIADRM_64 := true
 
+ifeq ($(BOARD_KERNEL_SEPARATED_DTBO), true)
 # Set Header version for bootimage
+ifneq ($(strip $(TARGET_KERNEL_APPEND_DTB)),true)
+#Enable dtb in boot image and Set Header version
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_BOOTIMG_HEADER_VERSION := 2
+else
 BOARD_BOOTIMG_HEADER_VERSION := 1
+endif
+
 BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
+endif
 
 #################################################################################
 # This is the End of BoardConfig.mk file.
