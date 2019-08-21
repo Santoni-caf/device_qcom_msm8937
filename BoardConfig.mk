@@ -28,6 +28,10 @@ ifneq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
       endif
   endif
 else
+  # Product partition support
+  TARGET_COPY_OUT_PRODUCT := product
+  BOARD_USES_PRODUCTIMAGE := true
+  BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
   # Define the Dynamic Partition sizes and groups.
   ifeq ($(ENABLE_AB), true)
     BOARD_SUPER_PARTITION_SIZE := 12884901888
@@ -40,7 +44,8 @@ else
   endif
   BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
   BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 5314772992
-  BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor
+  BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system product vendor
+  BOARD_EXT4_SHARE_DUP_BLOCKS := true
   BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 endif
 ### Dynamic partition Handling
@@ -226,7 +231,7 @@ endif
 ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
     BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_serial_dm,0x78B0000 androidboot.usbconfigfs=true loop.max_part=7
 else ifeq ($(strip $(TARGET_KERNEL_VERSION)), 3.18)
-    BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78B0000 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.selinux=permissive
+    BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78B0000 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7
 endif
 #BOARD_KERNEL_SEPARATED_DT := true
 
