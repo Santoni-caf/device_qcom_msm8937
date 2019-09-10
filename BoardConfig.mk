@@ -47,6 +47,9 @@ else
   BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system product vendor
   BOARD_EXT4_SHARE_DUP_BLOCKS := true
   BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
+  # Metadata partition (applicable only for new launches)
+  BOARD_METADATAIMAGE_PARTITION_SIZE := 16777216
+  BOARD_USES_METADATA_PARTITION := true
 endif
 ### Dynamic partition Handling
 
