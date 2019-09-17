@@ -271,6 +271,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += telephony-ext
 PRODUCT_BOOT_JARS += telephony-ext
 
+#Camera QC extends API
+ifeq ($(strip $(TARGET_USES_QTIC_EXTENSION)),true)
+PRODUCT_BOOT_JARS += com.qualcomm.qti.camera
+endif
+
 # Defined the locales
 PRODUCT_LOCALES += th_TH vi_VN tl_PH hi_IN ar_EG ru_RU tr_TR pt_BR bn_IN mr_IN ta_IN te_IN zh_HK \
         in_ID my_MM km_KH sw_KE uk_UA pl_PL sr_RS sl_SI fa_IR kn_IN ml_IN ur_IN gu_IN or_IN
