@@ -71,6 +71,13 @@ ifneq ($(wildcard kernel/msm-3.18),)
 else ifneq ($(wildcard kernel/msm-4.9),)
     TARGET_KERNEL_VERSION := 4.9
     $(warning "Build with 4.9 kernel")
+
+    #Enable llvm support for kernel
+    KERNEL_LLVM_SUPPORT := true
+
+    #Enable sd-llvm suppport for kernel
+    KERNEL_SD_LLVM_SUPPORT := true
+
 else
     $(warning "Unknown kernel")
 endif
