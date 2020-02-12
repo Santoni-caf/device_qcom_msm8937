@@ -27,9 +27,9 @@ ifeq ($(KERNEL_DEFCONFIG),)
         endif
     else ifneq ($(wildcard kernel/msm-4.9),)
         ifeq ($(TARGET_BUILD_VARIANT),user)
-          KERNEL_DEFCONFIG := msm8937-perf_defconfig
+          KERNEL_DEFCONFIG := vendor/msm8937-perf_defconfig
         else
-          KERNEL_DEFCONFIG := msm8937_defconfig
+          KERNEL_DEFCONFIG := vendor/msm8937_defconfig
         endif
     endif
 endif
