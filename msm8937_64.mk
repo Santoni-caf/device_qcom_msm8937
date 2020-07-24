@@ -210,12 +210,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += android.hardware.media.omx@1.0-impl
 
-#ANT+ stack
-PRODUCT_PACKAGES += \
-    AntHalService \
-    libantradio \
-    antradio_app
-
 # Display/Graphics
  PRODUCT_PACKAGES += \
      android.hardware.graphics.allocator@2.0-impl \
