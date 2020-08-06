@@ -93,9 +93,8 @@ persist.vendor.data.mode=concurrent
 #system props for time-services
 persist.timed.enable=true
 
-#system prop for Bluetooth SOC type
+#system prop for Bluetooth
 ro.bluetooth.library_name=libbluetooth_qti.so
-persist.vendor.btstack.enable.splita2dp=false
 
 #
 # system prop for opengles version
@@ -112,11 +111,6 @@ vendor.gralloc.disable_ahardware_buffer=1
 # System props for telephony
 # System prop to turn on CdmaLTEPhone always
 telephony.lteOnCdmaDevice=1
-
-#
-# System props for bluetooh
-# System prop to turn on hfp client
-bluetooth.hfp.client=1
 
 #Simulate sdcard on /data/media
 #
