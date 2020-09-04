@@ -311,4 +311,5 @@ endif
 # Now, Pickup other split Board.mk files:
 #################################################################################
 -include vendor/qcom/defs/board-defs/legacy/*.mk
+-include vendor/qcom/msm8937_64/BoardConfigVendor.mk
 #################################################################################
