@@ -403,4 +403,5 @@ PRODUCT_COPY_FILES += \
 # Now, Pickup other split product.mk files:
 ###################################################################################
 $(call inherit-product-if-exists, vendor/qcom/defs/product-defs/legacy/*.mk)
+$(call inherit-product, vendor/qcom/msm8937_64/msm8937_64-vendor.mk)
 ###################################################################################
