@@ -416,11 +416,19 @@ ifeq ($(strip $(TARGET_KERNEL_VERSION)), 3.18)
     PRODUCT_PACKAGES += vendor-extra-libs
 endif
 
+# Disable skip validate
+PRODUCT_PROPERTY_OVERRIDES += \
+  vendor.display.disable_skip_validate=1
+
 # For bringup
 WLAN_BRINGUP_NEW_SP := true
 DISP_BRINGUP_NEW_SP := true
 CAM_BRINGUP_NEW_SP := true
 SEC_USERSPACE_BRINGUP_NEW_SP := true
+
+#vendor prop to disable advanced network scanning
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.vendor.radio.enableadvancedscan=false
 
 # Enable telephpony ims feature
 PRODUCT_COPY_FILES += \
