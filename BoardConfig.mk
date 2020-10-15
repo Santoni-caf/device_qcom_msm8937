@@ -11,7 +11,7 @@ BOARD_VNDK_VERSION := current
 ### Dynamic partition Handling
 ifneq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
   ifeq ($(ENABLE_VENDOR_IMAGE), true)
-      BOARD_VENDORIMAGE_PARTITION_SIZE := 1073741824
+      BOARD_VENDORIMAGE_PARTITION_SIZE := 536870912
   endif
   BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3221225472
   BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
@@ -100,7 +100,7 @@ TARGET_2ND_CPU_VARIANT := cortex-a53
 #USE_CLANG_PLATFORM_BUILD := true
 TARGET_CPU_CORTEX_A53 := true
 
-TARGET_NO_BOOTLOADER := false
+TARGET_NO_BOOTLOADER := true
 TARGET_NO_KERNEL := false
 BOOTLOADER_GCC_VERSION := arm-eabi-4.8
 BOOTLOADER_PLATFORM := msm8952 # use msm8937 LK configuration
@@ -172,10 +172,7 @@ else ifeq ($(TARGET_KERNEL_VERSION), 4.9)
     endif
 endif
 
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 1971322880
-BOARD_PERSISTIMAGE_PARTITION_SIZE := 33554432
-BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_OEMIMAGE_PARTITION_SIZE := 268435456
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 10332634112
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_DTBOIMG_PARTITION_SIZE := 0x0800000
 
@@ -204,31 +201,7 @@ TARGET_USES_COLOR_METADATA := true
 TARGET_NO_RPC := true
 
 BOARD_VENDOR_KERNEL_MODULES := \
-    $(KERNEL_MODULES_OUT)/audio_apr.ko \
-    $(KERNEL_MODULES_OUT)/pronto_wlan.ko \
-    $(KERNEL_MODULES_OUT)/audio_q6_notifier.ko \
-    $(KERNEL_MODULES_OUT)/audio_adsp_loader.ko \
-    $(KERNEL_MODULES_OUT)/audio_q6.ko \
-    $(KERNEL_MODULES_OUT)/audio_usf.ko \
-    $(KERNEL_MODULES_OUT)/audio_pinctrl_wcd.ko \
-    $(KERNEL_MODULES_OUT)/audio_swr.ko \
-    $(KERNEL_MODULES_OUT)/audio_wcd_core.ko \
-    $(KERNEL_MODULES_OUT)/audio_swr_ctrl.ko \
-    $(KERNEL_MODULES_OUT)/audio_wsa881x.ko \
-    $(KERNEL_MODULES_OUT)/audio_wsa881x_analog.ko \
-    $(KERNEL_MODULES_OUT)/audio_platform.ko \
-    $(KERNEL_MODULES_OUT)/audio_cpe_lsm.ko \
-    $(KERNEL_MODULES_OUT)/audio_hdmi.ko \
-    $(KERNEL_MODULES_OUT)/audio_stub.ko \
-    $(KERNEL_MODULES_OUT)/audio_wcd9xxx.ko \
-    $(KERNEL_MODULES_OUT)/audio_mbhc.ko \
-    $(KERNEL_MODULES_OUT)/audio_wcd9335.ko \
-    $(KERNEL_MODULES_OUT)/audio_wcd_cpe.ko \
-    $(KERNEL_MODULES_OUT)/audio_digital_cdc.ko \
-    $(KERNEL_MODULES_OUT)/audio_analog_cdc.ko \
-    $(KERNEL_MODULES_OUT)/audio_native.ko \
-    $(KERNEL_MODULES_OUT)/audio_machine_sdm450.ko \
-    $(KERNEL_MODULES_OUT)/audio_machine_ext_sdm450.ko
+    $(KERNEL_MODULES_OUT)/pronto_wlan.ko 
 
 ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
     BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_serial_dm,0x78B0000 androidboot.usbconfigfs=true loop.max_part=7
@@ -241,8 +214,8 @@ BOARD_SECCOMP_POLICY := device/qcom/msm8937_32/seccomp
 
 BOARD_KERNEL_BASE        := 0x80000000
 BOARD_KERNEL_PAGESIZE    := 2048
-BOARD_KERNEL_TAGS_OFFSET := 0x01E00000
-BOARD_RAMDISK_OFFSET     := 0x02000000
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_RAMDISK_OFFSET     := 0x01000000
 
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
