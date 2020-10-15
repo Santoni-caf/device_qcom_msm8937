@@ -172,35 +172,6 @@ PRODUCT_PACKAGES += libGLES_android
 
 USE_LIB_PROCESS_GROUP := true
 
-#Audio DLKM
-ifeq ($(TARGET_KERNEL_VERSION), 4.9)
-AUDIO_DLKM := audio_apr.ko
-AUDIO_DLKM += audio_q6_notifier.ko
-AUDIO_DLKM += audio_adsp_loader.ko
-AUDIO_DLKM += audio_q6.ko
-AUDIO_DLKM += audio_usf.ko
-AUDIO_DLKM += audio_pinctrl_wcd.ko
-AUDIO_DLKM += audio_swr.ko
-AUDIO_DLKM += audio_wcd_core.ko
-AUDIO_DLKM += audio_swr_ctrl.ko
-AUDIO_DLKM += audio_wsa881x.ko
-AUDIO_DLKM += audio_wsa881x_analog.ko
-AUDIO_DLKM += audio_platform.ko
-AUDIO_DLKM += audio_cpe_lsm.ko
-AUDIO_DLKM += audio_hdmi.ko
-AUDIO_DLKM += audio_stub.ko
-AUDIO_DLKM += audio_wcd9xxx.ko
-AUDIO_DLKM += audio_mbhc.ko
-AUDIO_DLKM += audio_wcd9335.ko
-AUDIO_DLKM += audio_wcd_cpe.ko
-AUDIO_DLKM += audio_digital_cdc.ko
-AUDIO_DLKM += audio_analog_cdc.ko
-AUDIO_DLKM += audio_native.ko
-AUDIO_DLKM += audio_machine_sdm450.ko
-AUDIO_DLKM += audio_machine_ext_sdm450.ko
-PRODUCT_PACKAGES += $(AUDIO_DLKM)
-endif
-
 # MIDI feature
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml
