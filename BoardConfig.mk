@@ -10,6 +10,9 @@ BOARD_SYSTEMSDK_VERSIONS :=28
 BOARD_VNDK_VERSION := current
 endif
 
+# Assert
+TARGET_OTA_ASSERT_DEVICE := santoni
+
 ### Dynamic partition Handling
 ifneq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
   ifeq ($(ENABLE_VENDOR_IMAGE), true)
