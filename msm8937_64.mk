@@ -420,14 +420,14 @@ ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
     PRODUCT_PACKAGES += vndk_package
     PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
     TARGET_USES_MKE2FS := true
-    $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
+    $(call inherit-product, build/make/target/product/product_launched_with_m.mk)
 endif
 
 ifeq ($(strip $(TARGET_KERNEL_VERSION)), 3.18)
     # Enable extra vendor libs
     ENABLE_EXTRA_VENDOR_LIBS := true
     PRODUCT_PACKAGES += vendor-extra-libs
-    $(call inherit-product, build/make/target/product/product_launched_with_o_mr1.mk)
+    $(call inherit-product, build/make/target/product/product_launched_with_m.mk)
 endif
 
 # For bringup
