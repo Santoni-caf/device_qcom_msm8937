@@ -27,7 +27,7 @@ ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
 else
   ENABLE_AB ?= false
   BOARD_DYNAMIC_PARTITION_ENABLE ?= false
-  $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
+  $(call inherit-product, build/make/target/product/product_launched_with_m.mk)
 endif
 
 ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
