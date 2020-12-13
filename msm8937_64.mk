@@ -341,7 +341,7 @@ PRODUCT_PACKAGES += android.hardware.light@2.0-impl
 PRODUCT_PACKAGES += android.hardware.thermal@1.0-impl \
                     android.hardware.thermal@1.0-service
 
-TARGET_SUPPORT_SOTER := true
+TARGET_SUPPORT_SOTER := false
 
 #set KMGK_USE_QTI_SERVICE to true to enable QTI KEYMASTER and GATEKEEPER HIDLs
 ifeq ($(ENABLE_VENDOR_IMAGE), true)
