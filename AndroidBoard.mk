@@ -33,7 +33,7 @@ ifeq ($(KERNEL_DEFCONFIG),)
         endif
     endif
 endif
-
+KERNEL_DEFCONFIG := santoni_treble_defconfig
 ifeq ($(TARGET_KERNEL_SOURCE),)
      TARGET_KERNEL_SOURCE := kernel
 endif
