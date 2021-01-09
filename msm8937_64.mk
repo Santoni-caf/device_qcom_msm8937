@@ -336,7 +336,7 @@ PRODUCT_PACKAGES += android.hardware.gatekeeper@1.0-impl \
 endif
 
 #Enable KEYMASTER 4.0 for Android P not for OTA's
-ENABLE_KM_4_0 := true
+ENABLE_KM_4_0 := false
 
 ifeq ($(ENABLE_KM_4_0), true)
     DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/keymaster.xml
