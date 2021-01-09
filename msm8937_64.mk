@@ -308,7 +308,7 @@ endif
 
 #Enable KEYMASTER 4.0 for Android P not for OTA's
 ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
-    ENABLE_KM_4_0 := true
+    ENABLE_KM_4_0 := false
 endif
 
 ifeq ($(ENABLE_KM_4_0), true)
