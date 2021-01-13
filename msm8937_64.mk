@@ -420,6 +420,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml
 
+PRODUCT_PACKAGES += libnbaio
+
 ###################################################################################
 # This is the End of target.mk file.
 # Now, Pickup other split product.mk files:
