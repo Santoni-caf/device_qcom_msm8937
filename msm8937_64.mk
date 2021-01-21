@@ -1,25 +1,56 @@
 ALLOW_MISSING_DEPENDENCIES=true
 
-# Default A/B configuration.
-ENABLE_AB ?= false
+ifneq ($(wildcard kernel/msm-4.19),)
+    TARGET_KERNEL_VERSION := 4.19
+    $(warning "Build with 4.19 kernel.")
+else ifneq ($(wildcard kernel/msm-4.9),)
+    TARGET_KERNEL_VERSION := 4.9
+    $(warning "Build with 4.9 kernel")
+else
+    $(warning "Unknown kernel")
+endif
 
-# Dynamic-partition disabled by default
-BOARD_DYNAMIC_PARTITION_ENABLE ?= false
+# Retain the earlier default behavior i.e. ota config (dynamic partition was disabled if not set explicitly), so set
+# SHIPPING_API_LEVEL to 28 if it was not set earlier (this is generally set earlier via build.sh per-target)
+ifeq ($(TARGET_KERNEL_VERSION), 4.9)
+SHIPPING_API_LEVEL := 28
+else
+SHIPPING_API_LEVEL := 29
+endif
+
+#### Turning BOARD_DYNAMIC_PARTITION_ENABLE flag to TRUE will enable dynamic partition/super image creation.
+# Enable Dynamic partitions only for Q new launch devices and beyond.
+ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
+  ENABLE_AB ?= true
+  BOARD_DYNAMIC_PARTITION_ENABLE ?= true
+  PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
+else
+  ENABLE_AB ?= false
+  BOARD_DYNAMIC_PARTITION_ENABLE ?= false
+  $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
+endif
 
 ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += fastbootd
 # Add default implementation of fastboot HAL.
 PRODUCT_PACKAGES += android.hardware.fastboot@1.0-impl-mock
-ifeq ($(ENABLE_AB), true)
-PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstabs-4.9/fstab_AB_dynamic_partition_variant.qti:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
-else
-PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstabs-4.9/fstab_non_AB_dynamic_partition_variant.qti:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
-endif
+  ifeq ($(TARGET_KERNEL_VERSION), 4.9)
+    ifeq ($(ENABLE_AB), true)
+      PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstabs-4.9/fstab_AB_dynamic_partition_variant.qti:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+    else
+      PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstabs-4.9/fstab_non_AB_dynamic_partition_variant.qti:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+    endif
+  else
+    ifeq ($(ENABLE_AB), true)
+      PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstabs-4.19/fstab_AB_dynamic_partition_variant.qti:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+    else
+      PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstabs-4.19/fstab_non_AB_dynamic_partition_variant.qti:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+    endif
+  endif
 endif
 
 # Enable AVB 2.0
-ifneq ($(wildcard kernel/msm-4.9),)
 BOARD_AVB_ENABLE := true
 
 ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
@@ -33,7 +64,6 @@ BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 2
 $(call inherit-product, build/make/target/product/gsi_keys.mk)
 endif
-endif
 
 TARGET_USES_AOSP := false
 TARGET_USES_AOSP_FOR_AUDIO := false
@@ -42,6 +72,17 @@ TARGET_SYSTEM_PROP := device/qcom/msm8937_64/system.prop
 
 ifeq ($(TARGET_USES_AOSP),true)
 TARGET_DISABLE_DASH := true
+endif
+
+ifeq ($(TARGET_KERNEL_VERSION), 4.19)
+#Enable llvm support for kernel
+KERNEL_LLVM_SUPPORT := true
+
+#Enable sd-llvm support for kernel
+KERNEL_SD_LLVM_SUPPORT := true
+
+#Enable libion support
+LIBION_PATH_INCLUDES := true
 endif
 
 DEVICE_PACKAGE_OVERLAYS := device/qcom/msm8937_64/overlay
@@ -56,23 +97,11 @@ ifeq ($(ENABLE_VENDOR_IMAGE), true)
 #TARGET_USES_QTIC := false
 endif
 
-
 TARGET_USES_NQ_NFC := false
 
 ifeq ($(TARGET_USES_NQ_NFC),true)
 PRODUCT_COPY_FILES += \
     device/qcom/common/nfc/libnfc-brcm.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nci.conf
-endif
-
-
-ifneq ($(wildcard kernel/msm-3.18),)
-    TARGET_KERNEL_VERSION := 3.18
-    $(warning "Build with 3.18 kernel.")
-else ifneq ($(wildcard kernel/msm-4.9),)
-    TARGET_KERNEL_VERSION := 4.9
-    $(warning "Build with 4.9 kernel")
-else
-    $(warning "Unknown kernel")
 endif
 
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
@@ -173,7 +202,6 @@ PRODUCT_PACKAGES += libGLES_android
 USE_LIB_PROCESS_GROUP := true
 
 #Audio DLKM
-ifeq ($(TARGET_KERNEL_VERSION), 4.9)
 AUDIO_DLKM := audio_apr.ko
 AUDIO_DLKM += audio_q6_notifier.ko
 AUDIO_DLKM += audio_adsp_loader.ko
@@ -199,7 +227,6 @@ AUDIO_DLKM += audio_native.ko
 AUDIO_DLKM += audio_machine_sdm450.ko
 AUDIO_DLKM += audio_machine_ext_sdm450.ko
 PRODUCT_PACKAGES += $(AUDIO_DLKM)
-endif
 
 # MIDI feature
 PRODUCT_COPY_FILES += \
@@ -336,9 +363,7 @@ PRODUCT_PACKAGES += android.hardware.gatekeeper@1.0-impl \
 endif
 
 #Enable KEYMASTER 4.0 for Android P not for OTA's
-ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
-    ENABLE_KM_4_0 := true
-endif
+ENABLE_KM_4_0 := true
 
 ifeq ($(ENABLE_KM_4_0), true)
     DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/keymaster.xml
@@ -388,19 +413,10 @@ ifeq ($(BOARD_AVB_ENABLE),false)
   PRODUCT_SUPPORTS_VERITY := true
 endif
 
-ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
-    # Enable vndk-sp Libraries
-    PRODUCT_PACKAGES += vndk_package
-    PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
-    TARGET_USES_MKE2FS := true
-    $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
-endif
-
-ifeq ($(strip $(TARGET_KERNEL_VERSION)), 3.18)
-    # Enable extra vendor libs
-    ENABLE_EXTRA_VENDOR_LIBS := true
-    PRODUCT_PACKAGES += vendor-extra-libs
-endif
+# Enable vndk-sp Libraries
+PRODUCT_PACKAGES += vndk_package
+PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
+TARGET_USES_MKE2FS := true
 
 # Disable skip validate
 PRODUCT_PROPERTY_OVERRIDES += \

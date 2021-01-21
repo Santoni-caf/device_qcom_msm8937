@@ -4,11 +4,9 @@
 #
 
 #Generate DTBO image
-ifeq ($(TARGET_KERNEL_VERSION), 4.9)
 BOARD_KERNEL_SEPARATED_DTBO := true
-BOARD_SYSTEMSDK_VERSIONS :=28
+BOARD_SYSTEMSDK_VERSIONS := $(SHIPPING_API_LEVEL)
 BOARD_VNDK_VERSION := current
-endif
 
 ### Dynamic partition Handling
 ifneq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
@@ -136,21 +134,21 @@ ifeq ($(BOARD_AVB_ENABLE), true)
 endif
 endif
 
-ifneq ($(wildcard kernel/msm-3.18),)
+ifeq ($(TARGET_KERNEL_VERSION), 4.19)
     ifeq ($(ENABLE_AB),true)
-      ifeq ($(ENABLE_VENDOR_IMAGE), true)
-        TARGET_RECOVERY_FSTAB := device/qcom/msm8937_64/fstabs-3.18/recovery_AB_split_variant.fstab
-      else
-        TARGET_RECOVERY_FSTAB := device/qcom/msm8937_64/fstabs-3.18/recovery_AB_non-split_variant.fstab
-      endif
+        ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
+          TARGET_RECOVERY_FSTAB := device/qcom/msm8937_64/fstabs-4.19/recovery_AB_dynamic_variant.fstab
+        else
+          TARGET_RECOVERY_FSTAB := device/qcom/msm8937_64/fstabs-4.19/recovery_AB_split_variant.fstab
+        endif
     else
-      ifeq ($(ENABLE_VENDOR_IMAGE), true)
-        TARGET_RECOVERY_FSTAB := device/qcom/msm8937_64/fstabs-3.18/recovery_non-AB_split_variant.fstab
-      else
-        TARGET_RECOVERY_FSTAB := device/qcom/msm8937_64/fstabs-3.18/recovery_non-AB_non-split_variant.fstab
-      endif
+        ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
+          TARGET_RECOVERY_FSTAB := device/qcom/msm8937_64/fstabs-4.19/recovery_non-AB_dynamic_variant.fstab
+        else
+          TARGET_RECOVERY_FSTAB := device/qcom/msm8937_64/fstabs-4.19/recovery_non-AB_split_variant.fstab
+        endif
     endif
-else ifneq ($(wildcard kernel/msm-4.9),)
+else ifeq ($(TARGET_KERNEL_VERSION), 4.9)
     ifeq ($(ENABLE_AB),true)
       ifeq ($(ENABLE_VENDOR_IMAGE), true)
         ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
@@ -172,8 +170,6 @@ else ifneq ($(wildcard kernel/msm-4.9),)
         TARGET_RECOVERY_FSTAB := device/qcom/msm8937_64/fstabs-4.9/recovery_non-AB_non-split_variant.fstab
       endif
     endif
-else
-    $(warning "Unknown kernel")
 endif
 
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 1971322880
@@ -181,9 +177,7 @@ BOARD_PERSISTIMAGE_PARTITION_SIZE := 33554432
 BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_OEMIMAGE_PARTITION_SIZE := 268435456
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
-ifeq ($(TARGET_KERNEL_VERSION), 4.9)
 BOARD_DTBOIMG_PARTITION_SIZE := 0x0800000
-endif
 
 ifeq ($(ENABLE_VENDOR_IMAGE), true)
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -192,9 +186,7 @@ BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 endif
 
 # Enable kaslr seed support
-ifeq ($(TARGET_KERNEL_VERSION), 4.9)
 KASLRSEED_SUPPORT := true
-endif
 
 # Enable suspend during charger mode
 BOARD_CHARGER_ENABLE_SUSPEND := true
@@ -211,7 +203,6 @@ TARGET_USES_GRALLOC1 := true
 TARGET_USES_COLOR_METADATA := true
 TARGET_NO_RPC := true
 
-ifeq ($(TARGET_KERNEL_VERSION), 4.9)
 BOARD_VENDOR_KERNEL_MODULES := \
     $(KERNEL_MODULES_OUT)/audio_apr.ko \
     $(KERNEL_MODULES_OUT)/pronto_wlan.ko \
@@ -238,12 +229,11 @@ BOARD_VENDOR_KERNEL_MODULES := \
     $(KERNEL_MODULES_OUT)/audio_native.ko \
     $(KERNEL_MODULES_OUT)/audio_machine_sdm450.ko \
     $(KERNEL_MODULES_OUT)/audio_machine_ext_sdm450.ko
-endif
 
 ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
     BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_serial_dm,0x78B0000 androidboot.usbconfigfs=true loop.max_part=7
-else ifeq ($(strip $(TARGET_KERNEL_VERSION)), 3.18)
-    BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78B0000 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7
+else ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.19)
+    BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_serial_dm,0x78B0000 androidboot.usbconfigfs=true loop.max_part=7
 endif
 #BOARD_KERNEL_SEPARATED_DT := true
 
@@ -314,9 +304,7 @@ endif
 
 FEATURE_QCRIL_UIM_SAP_SERVER_MODE := true
 
-ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
 PMIC_QG_SUPPORT := true
-endif
 
 TARGET_ENABLE_MEDIADRM_64 := true
 
