@@ -1,0 +1,9 @@
+# Fingerprint
+persist.sys.fp.                         u:object_r:hal_fingerprint_prop:s0
+persist.vendor.sys.fp.                  u:object_r:hal_fingerprint_prop:s0
+ro.boot.fp.                             u:object_r:hal_fingerprint_prop:s0
+ro.boot.fpsensor                        u:object_r:hal_fingerprint_prop:s0
+sys.fp.                                 u:object_r:hal_fingerprint_prop:s0
+fp.version.driver                       u:object_r:hal_fingerprint_prop:s0
+goodix.fp.                              u:object_r:hal_fingerprint_prop:s0
+goodix.version.                         u:object_r:hal_fingerprint_prop:s0

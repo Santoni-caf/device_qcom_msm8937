@@ -298,7 +298,11 @@ endif
 BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 endif
 
+# SELinux
+BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
+
 -include $(LOCAL_PATH)/blobs/tissot_ril/BoardConfigVendor.mk
+-include $(LOCAL_PATH)/blobs/fp/BoardConfigVendor.mk
 #################################################################################
 # This is the End of BoardConfig.mk file.
 # Now, Pickup other split Board.mk files:

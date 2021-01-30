@@ -1,0 +1,11 @@
+# Fingerprint
+/persist/data/gxfp(/.*)?                        u:object_r:fingerprintd_data_file:s0
+/data/gf_data(/.*)?                             u:object_r:fingerprintd_data_file:s0
+/data/system/fingerprint(/.*)?                  u:object_r:fingerprintd_data_file:s0
+/data/vendor/gf_data(/.*)?                      u:object_r:fingerprint_vendor_data_file:s0
+/data/vendor/goodix(/.*)?                       u:object_r:fingerprint_vendor_data_file:s0
+/dev/focal_fp                                   u:object_r:fingerprint_device:s0
+/dev/goodix_fp                                  u:object_r:fingerprint_device:s0
+
+# gx_fpd
+/(vendor|system/vendor)/bin/gx_fpd              u:object_r:gx_fpd_exec:s0
