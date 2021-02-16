@@ -1,0 +1,34 @@
+# QMI - from Tissot PKQ1.180917.001 V10.0.24.0.PDHMIXM
+vendor/lib/libdsi_netctrl.so|78206e2c94d0a9ceb69712aeec99ed90f8fc63b3
+vendor/lib/libdsutils.so|bfc2e8fb927ccd35158ceaf4389fe54186091132
+vendor/lib/libidl.so|6fe7c2a4e4ec0ac099a6306c3111e6497e2c501f
+vendor/lib/libqdi.so|6cb8c78aaa70a5fa9b83e260556bada097ca0d14
+vendor/lib/libqdp.so|7cb256acd39cf506730158b88b4cc2607fa664d8
+vendor/lib/libqmi.so|0b035dd37319391f27ce6647e707f4e7afaacec0
+vendor/lib64/libdsi_netctrl.so|3022d69494ad5b9400ed7188b72dc2d72dff9e24
+vendor/lib64/libdsutils.so|fe909f54243f07fc76382b0839f95f96e1abfef2
+vendor/lib64/libidl.so|3b1a7ca55ccfe06d12d62f2c214b5ac2ee0e69da
+vendor/lib64/libqdi.so|5e14939265c9f30c59f4a7964bf83da69ecfa38d
+vendor/lib64/libqdp.so|60faa5e55e118b18553c160ff55200cbeab2f2f6
+vendor/lib64/libqmi.so|f814a152f974b2305f74f90a4f1c0a20989fb253
+
+# Radio - from Tissot PKQ1.180917.001 V10.0.24.0.PDHMIXM
+vendor/bin/netmgrd|7206c7b26b09a2d7bccab23fd66094771c00aad7
+vendor/etc/data/dsi_config.xml|f4861831fcb21d43e2a9ca12519155ebb8ac1407
+vendor/etc/data/netmgr_config.xml|9a66590aed48b5df9c33a75007420d9d99f533b5
+vendor/lib64/libconfigdb.so|1fa77478a72cf4152c1027fd40ee9a58a0ba89aa
+vendor/lib64/liblqe.so|63ed946d00ed73664410041e3e8fa8c2f5cbeeb6
+vendor/lib64/libnetmgr.so|6265bfdff5b5251a6c4823b835fc1c572de00728
+vendor/lib64/libnetmgr_common.so|46b5613d6b31ba32d3202dbfe9a2dbfef512fe6c
+vendor/lib64/libnlnetmgr.so|6ad911ebb9ffa785fbb2c071486a0166efcd4775
+vendor/lib64/libqcmaputils.so|3a542dfda06a2c5824ba505ff7d03f920a5eaf43
+vendor/lib64/libqrtr.so|83676274fde1056a0507b4100a3a5423f5af5021
+vendor/lib64/libril-qc-ltedirectdisc.so|28008699ae1178e95fe6e87b2a4b18eb3fd682c2
+vendor/lib64/libril-qc-qmi-1.so|6ff463b936e35ad17ab5010ea88edf12b77e94af
+vendor/lib64/libril-qc-radioconfig.so|3ee0fa2ca0a2419a2629dfea6c7b4078d9ae11f6
+vendor/lib64/librilqmiservices.so|c61998e2944ff427a9d06c0ab5db83986db412ea
+vendor/radio/qcril_database/qcril.db|43b7d5e7ededc9cd5c0b1f7a8941d21d4eb0c9c1
+
+# Radio (IMS) - from Tissot PKQ1.180917.001 V10.0.24.0.PDHMIXM
+vendor/bin/imsdatadaemon|56e1ab6f6f6679261bcd36dd218097632da866b6
+vendor/bin/imsqmidaemon|0e5cf08e7cbd4e34fb69e6644a8c7d5e6715c306
