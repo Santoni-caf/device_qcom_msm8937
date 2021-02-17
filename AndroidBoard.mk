@@ -18,35 +18,25 @@ endif
 #----------------------------------------------------------------------
 # Compile Linux Kernel
 #----------------------------------------------------------------------
-ifeq ($(KERNEL_DEFCONFIG),)
-    ifneq ($(wildcard kernel/msm-3.18),)
-        ifeq ($(TARGET_BUILD_VARIANT),user)
-          KERNEL_DEFCONFIG := msm8937-perf_defconfig
-        else
-          KERNEL_DEFCONFIG := msm8937_defconfig
-        endif
-    else ifneq ($(wildcard kernel/msm-4.9),)
-        ifeq ($(TARGET_BUILD_VARIANT),user)
-          KERNEL_DEFCONFIG := msm8937-perf_defconfig
-        else
-          KERNEL_DEFCONFIG := msm8937_defconfig
-        endif
-    endif
-endif
-
-ifeq ($(TARGET_KERNEL_SOURCE),)
-     TARGET_KERNEL_SOURCE := kernel
-endif
-
+ifeq ($(TARGET_KERNEL_VERSION), 4.19)
+   include device/qcom/kernelscripts/kernel_definitions.mk
+else
 ifeq ($(TARGET_KERNEL_VERSION), 4.9)
+   ifeq ($(TARGET_BUILD_VARIANT),user)
+      KERNEL_DEFCONFIG := msm8937-perf_defconfig
+   else
+      KERNEL_DEFCONFIG := msm8937_defconfig
+   endif
+
+   ifeq ($(TARGET_KERNEL_SOURCE),)
+      TARGET_KERNEL_SOURCE := kernel
+   endif
+
 DTC := $(HOST_OUT_EXECUTABLES)/dtc$(HOST_EXECUTABLE_SUFFIX)
 # ../../ prepended to paths because kernel is at ./kernel/msm-x.x
 TEMP_TOP=$(shell pwd)
 TARGET_KERNEL_MAKE_ENV := DTC_EXT=$(TEMP_TOP)/$(DTC)
 TARGET_KERNEL_MAKE_ENV += CONFIG_BUILD_ARM64_DT_OVERLAY=y
-endif
-
-TEMP_TOP=$(shell pwd)
 TARGET_KERNEL_MAKE_ENV += HOSTCC=$(TEMP_TOP)/$(SOONG_LLVM_PREBUILTS_PATH)/clang
 TARGET_KERNEL_MAKE_ENV += HOSTAR=$(TEMP_TOP)/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8/bin/x86_64-linux-ar
 TARGET_KERNEL_MAKE_ENV += HOSTLD=$(TEMP_TOP)/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8/bin/x86_64-linux-ld
@@ -60,13 +50,12 @@ KERNEL_LLVM_SUPPORT := true
 KERNEL_SD_LLVM_SUPPORT := true
 
 include $(TARGET_KERNEL_SOURCE)/AndroidKernel.mk
-ifeq ($(TARGET_KERNEL_VERSION), 4.9)
 $(TARGET_PREBUILT_KERNEL): $(DTC)
-endif
 
 $(INSTALLED_KERNEL_TARGET): $(TARGET_PREBUILT_KERNEL) | $(ACP)
 	$(transform-prebuilt-to-target)
-
+endif
+endif
 #----------------------------------------------------------------------
 # Copy additional target-specific files
 #----------------------------------------------------------------------
@@ -98,11 +87,19 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := fstab.qcom
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
+ifeq ($(TARGET_KERNEL_VERSION), 4.9)
     ifeq ($(ENABLE_AB), true)
       LOCAL_SRC_FILES := fstabs-4.9/fstab_AB_dynamic_partition_variant.qti
     else
       LOCAL_SRC_FILES := fstabs-4.9/fstab_non_AB_dynamic_partition_variant.qti
     endif
+else
+    ifeq ($(ENABLE_AB), true)
+      LOCAL_SRC_FILES := fstabs-4.19/fstab_AB_dynamic_partition_variant.qti
+    else
+      LOCAL_SRC_FILES := fstabs-4.19/fstab_non_AB_dynamic_partition_variant.qti
+    endif
+endif
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
 include $(BUILD_PREBUILT)
 else
@@ -111,20 +108,18 @@ LOCAL_MODULE       := fstab.qcom
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
-ifneq ($(wildcard kernel/msm-3.18),)
-    ifeq ($(ENABLE_AB), true)
-      LOCAL_SRC_FILES    := fstabs-3.18/fstab_AB_variant.qti
-    else
-      LOCAL_SRC_FILES    := fstabs-3.18/fstab_non_AB_variant.qti
-    endif
-else ifneq ($(wildcard kernel/msm-4.9),)
+ifeq ($(TARGET_KERNEL_VERSION), 4.9)
     ifeq ($(ENABLE_AB), true)
       LOCAL_SRC_FILES    := fstabs-4.9/fstab_AB_variant.qti
     else
       LOCAL_SRC_FILES    := fstabs-4.9/fstab_non_AB_variant.qti
     endif
 else
-    $(warning "Unknown kernel")
+    ifeq ($(ENABLE_AB), true)
+      LOCAL_SRC_FILES    := fstabs-4.19/fstab_AB_variant.qti
+    else
+      LOCAL_SRC_FILES    := fstabs-4.19/fstab_non_AB_variant.qti
+    endif
 endif
 include $(BUILD_PREBUILT)
 endif
