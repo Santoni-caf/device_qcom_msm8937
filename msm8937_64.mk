@@ -13,9 +13,9 @@ endif
 # Retain the earlier default behavior i.e. ota config (dynamic partition was disabled if not set explicitly), so set
 # SHIPPING_API_LEVEL to 28 if it was not set earlier (this is generally set earlier via build.sh per-target)
 ifeq ($(TARGET_KERNEL_VERSION), 4.9)
-SHIPPING_API_LEVEL := 28
+  SHIPPING_API_LEVEL := 28
 else
-SHIPPING_API_LEVEL := 29
+  SHIPPING_API_LEVEL := 29
 endif
 
 #### Turning BOARD_DYNAMIC_PARTITION_ENABLE flag to TRUE will enable dynamic partition/super image creation.
@@ -28,6 +28,26 @@ else
   ENABLE_AB ?= false
   BOARD_DYNAMIC_PARTITION_ENABLE ?= false
   $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
+endif
+
+ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
+ # f2fs utilities
+ PRODUCT_PACKAGES += \
+     sg_write_buffer \
+     f2fs_io \
+     check_f2fs
+
+ # Userdata checkpoint
+ PRODUCT_PACKAGES += \
+     checkpoint_gc
+
+ ifeq ($(ENABLE_AB), true)
+ AB_OTA_POSTINSTALL_CONFIG += \
+     RUN_POSTINSTALL_vendor=true \
+     POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
+     FILESYSTEM_TYPE_vendor=ext4 \
+     POSTINSTALL_OPTIONAL_vendor=true
+ endif
 endif
 
 ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
@@ -173,6 +193,13 @@ DEVICE_MANIFEST_FILE := device/qcom/msm8937_64/manifest.xml
 ifeq ($(ENABLE_AB), true)
 DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_ab.xml
 endif
+
+ifeq ($(SHIPPING_API_LEVEL),29)
+    DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_4.xml
+else
+    DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_3.xml
+endif
+
 DEVICE_MATRIX_FILE   := device/qcom/common/compatibility_matrix.xml
 DEVICE_FRAMEWORK_MANIFEST_FILE := device/qcom/msm8937_64/framework_manifest.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
