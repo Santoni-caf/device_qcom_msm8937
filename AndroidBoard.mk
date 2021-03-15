@@ -23,9 +23,9 @@ ifeq ($(TARGET_KERNEL_VERSION), 4.19)
 else
 ifeq ($(TARGET_KERNEL_VERSION), 4.9)
    ifeq ($(TARGET_BUILD_VARIANT),user)
-      KERNEL_DEFCONFIG := msm8937-perf_defconfig
+      KERNEL_DEFCONFIG ?= msm8937-perf_defconfig
    else
-      KERNEL_DEFCONFIG := msm8937_defconfig
+      KERNEL_DEFCONFIG ?= msm8937_defconfig
    endif
 
    ifeq ($(TARGET_KERNEL_SOURCE),)
