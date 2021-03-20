@@ -32,3 +32,16 @@ vendor/radio/qcril_database/qcril.db|43b7d5e7ededc9cd5c0b1f7a8941d21d4eb0c9c1
 # Radio (IMS) - from Tissot PKQ1.180917.001 V10.0.24.0.PDHMIXM
 vendor/bin/imsdatadaemon|56e1ab6f6f6679261bcd36dd218097632da866b6
 vendor/bin/imsqmidaemon|0e5cf08e7cbd4e34fb69e6644a8c7d5e6715c306
+
+# Gatekeeper - from LA.UM.8.6.2.r1-08600-89xx.0
+vendor/lib/hw/gatekeeper.msm8937.so
+vendor/lib64/hw/gatekeeper.msm8937.so
+
+# Keystore - from LA.UM.8.6.2.r1-08600-89xx.0
+vendor/lib/hw/keystore.msm8937.so
+vendor/lib64/hw/keystore.msm8937.so
+
+# Thermal - from LA.UM.8.6.2.r1-08600-89xx.0
+vendor/lib/hw/thermal.msm8937.so
+vendor/lib64/hw/thermal.msm8937.so
+
