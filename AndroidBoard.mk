@@ -19,6 +19,11 @@ endif
 # Compile Linux Kernel
 #----------------------------------------------------------------------
 ifeq ($(TARGET_KERNEL_VERSION), 4.19)
+   ifeq ($(TARGET_BUILD_VARIANT),user)
+      KERNEL_DEFCONFIG ?= vendor/msm8937-perf_defconfig
+   else
+      KERNEL_DEFCONFIG ?= vendor/msm8937_defconfig
+   endif
    include device/qcom/kernelscripts/kernel_definitions.mk
 else
 ifeq ($(TARGET_KERNEL_VERSION), 4.9)
