@@ -18,13 +18,17 @@ else
   SHIPPING_API_LEVEL := 29
 endif
 
+ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),30))
+# Enable incremental FS feature
+PRODUCT_PROPERTY_OVERRIDES += ro.incremental.enable=1
+endif
+
 #### Turning BOARD_DYNAMIC_PARTITION_ENABLE flag to TRUE will enable dynamic partition/super image creation.
 # Enable Dynamic partitions only for Q new launch devices and beyond.
 ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
   ENABLE_AB ?= true
   BOARD_DYNAMIC_PARTITION_ENABLE ?= true
   PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
-
   #Enable Light AIDL HAL
   PRODUCT_PACKAGES += android.hardware.lights-service.qti
   #Display/Graphics
