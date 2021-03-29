@@ -31,6 +31,7 @@
 system                                     /system         ext4    ro,barrier=1                                                    wait,avb=vbmeta_system,logical,first_stage_mount
 /dev/block/bootdevice/by-name/cache        /cache          ext4    noatime,nosuid,nodev,barrier=1,data=ordered                     wait,check
 vendor                                     /vendor         ext4    ro,barrier=1                                                    wait,avb,logical,first_stage_mount
+system_ext                                 /system_ext     ext4    ro,barrier=1,discard                                            wait,avb=vbmeta_system,logical,first_stage_mount
 /dev/block/bootdevice/by-name/userdata     /data           ext4    noatime,nosuid,nodev,barrier=1,data=ordered,noauto_da_alloc     wait,check,encryptable=footer
 /dev/block/mmcblk1p1                       /sdcard         vfat    nosuid,nodev                                                    wait
 /dev/block/bootdevice/by-name/boot         /boot           emmc    defaults                                                        defaults

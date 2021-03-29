@@ -99,8 +99,10 @@ BOARD_AVB_ENABLE := true
 ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
 # Enable product partition
 PRODUCT_BUILD_PRODUCT_IMAGE := true
+# Enable System_ext
+PRODUCT_BUILD_SYSTEM_EXT_IMAGE := true
 # enable vbmeta_system
-BOARD_AVB_VBMETA_SYSTEM := system product
+BOARD_AVB_VBMETA_SYSTEM := system product system_ext
 BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
 BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA2048
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
