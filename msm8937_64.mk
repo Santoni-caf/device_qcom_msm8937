@@ -34,6 +34,8 @@ ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
   vendor.qti.hardware.display.allocator-service \
   android.hardware.graphics.mapper@3.0-impl-qti-display \
   android.hardware.graphics.mapper@4.0-impl-qti-display
+  # Enable incremental FS feature
+  PRODUCT_PROPERTY_OVERRIDES += ro.incremental.enable=1
 else
   ENABLE_AB ?= false
   ENABLE_VIRTUAL_AB := false
