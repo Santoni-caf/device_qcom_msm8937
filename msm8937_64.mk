@@ -27,6 +27,8 @@ endif
 # Enable Dynamic partitions only for Q new launch devices and beyond.
 ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
   ENABLE_AB ?= true
+  # Enable virtual-ab by default
+  ENABLE_VIRTUAL_AB := true
   BOARD_DYNAMIC_PARTITION_ENABLE ?= true
   PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
   #Enable Light AIDL HAL
@@ -38,6 +40,7 @@ ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
   android.hardware.graphics.mapper@4.0-impl-qti-display
 else
   ENABLE_AB ?= false
+  ENABLE_VIRTUAL_AB := false
   BOARD_DYNAMIC_PARTITION_ENABLE ?= false
   $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
 
@@ -99,6 +102,9 @@ endif
 
 # Enable AVB 2.0
 BOARD_AVB_ENABLE := true
+ifeq ($(ENABLE_VIRTUAL_AB), true)
+  $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+endif
 
 ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
 # Enable product partition
@@ -221,10 +227,6 @@ PRODUCT_BOOT_JARS += WfdCommon
 endif
 
 DEVICE_MANIFEST_FILE := device/qcom/msm8937_64/manifest.xml
-ifeq ($(ENABLE_AB), true)
-DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_ab.xml
-endif
-
 ifeq ($(SHIPPING_API_LEVEL),29)
     DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_4.xml
 else
@@ -460,9 +462,10 @@ ifeq ($(ENABLE_AB),true)
 PRODUCT_PACKAGES += update_engine \
                    update_engine_client \
                    update_verifier \
+                   android.hardware.boot@1.1-impl-qti \
                    bootctrl.msm8937 \
-                   android.hardware.boot@1.0-impl \
-                   android.hardware.boot@1.0-service
+                   android.hardware.boot@1.1-impl-qti.recovery \
+                   android.hardware.boot@1.1-service
 
 PRODUCT_HOST_PACKAGES += \
     brillo_update_payload
