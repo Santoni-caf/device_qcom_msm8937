@@ -24,10 +24,18 @@ ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
   ENABLE_AB ?= true
   BOARD_DYNAMIC_PARTITION_ENABLE ?= true
   PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
+
+  #Enable Light AIDL HAL
+  PRODUCT_PACKAGES += android.hardware.lights-service.qti
 else
   ENABLE_AB ?= false
   BOARD_DYNAMIC_PARTITION_ENABLE ?= false
   $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
+
+  #Enable Light HIDL HAL
+  PRODUCT_PACKAGES += \
+  android.hardware.light@2.0-impl \
+  android.hardware.light@2.0-service
 endif
 
 ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
@@ -273,10 +281,7 @@ PRODUCT_PACKAGES += android.hardware.media.omx@1.0-impl
      android.hardware.graphics.composer@2.1-impl \
      android.hardware.graphics.composer@2.1-service \
      android.hardware.memtrack@1.0-impl \
-     android.hardware.memtrack@1.0-service \
-     android.hardware.light@2.0-impl \
-     android.hardware.light@2.0-service \
-     android.hardware.configstore@1.0-service
+     android.hardware.memtrack@1.0-service
 
 PRODUCT_PACKAGES += wcnss_service
 
@@ -371,8 +376,6 @@ PRODUCT_PACKAGES += \
     libandroid_net \
     libandroid_net_32
 
-#Enable Lights Impl HAL Compilation
-PRODUCT_PACKAGES += android.hardware.light@2.0-impl
 
 TARGET_SUPPORT_SOTER := true
 
