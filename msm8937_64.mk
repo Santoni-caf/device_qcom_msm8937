@@ -27,6 +27,11 @@ ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
 
   #Enable Light AIDL HAL
   PRODUCT_PACKAGES += android.hardware.lights-service.qti
+  #Display/Graphics
+  PRODUCT_PACKAGES += \
+  vendor.qti.hardware.display.allocator-service \
+  android.hardware.graphics.mapper@3.0-impl-qti-display \
+  android.hardware.graphics.mapper@4.0-impl-qti-display
 else
   ENABLE_AB ?= false
   BOARD_DYNAMIC_PARTITION_ENABLE ?= false
@@ -36,6 +41,11 @@ else
   PRODUCT_PACKAGES += \
   android.hardware.light@2.0-impl \
   android.hardware.light@2.0-service
+  #Display/Graphics
+  PRODUCT_PACKAGES += \
+  android.hardware.graphics.allocator@2.0-impl \
+  android.hardware.graphics.allocator@2.0-service \
+  android.hardware.graphics.mapper@2.0-impl-2.1
 endif
 
 ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
@@ -275,9 +285,6 @@ PRODUCT_PACKAGES += android.hardware.media.omx@1.0-impl
 
 # Display/Graphics
  PRODUCT_PACKAGES += \
-     android.hardware.graphics.allocator@2.0-impl \
-     android.hardware.graphics.allocator@2.0-service \
-     android.hardware.graphics.mapper@2.0-impl-2.1 \
      android.hardware.graphics.composer@2.1-impl \
      android.hardware.graphics.composer@2.1-service \
      android.hardware.memtrack@1.0-impl \

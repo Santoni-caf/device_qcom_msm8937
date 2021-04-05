@@ -207,6 +207,12 @@ TARGET_USES_GRALLOC1 := true
 TARGET_USES_COLOR_METADATA := true
 TARGET_NO_RPC := true
 
+ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
+TARGET_USES_QTI_MAPPER_2_0 := true
+TARGET_USES_QTI_MAPPER_EXTENSIONS_1_1 := true
+TARGET_USES_GRALLOC4 := true
+endif
+
 BOARD_VENDOR_KERNEL_MODULES := \
     $(KERNEL_MODULES_OUT)/audio_apr.ko \
     $(KERNEL_MODULES_OUT)/pronto_wlan.ko \
