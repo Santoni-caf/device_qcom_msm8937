@@ -15,7 +15,7 @@ endif
 ifeq ($(TARGET_KERNEL_VERSION), 4.9)
   SHIPPING_API_LEVEL := 28
 else
-  SHIPPING_API_LEVEL := 29
+  SHIPPING_API_LEVEL := 30
 endif
 
 ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),30))
@@ -227,7 +227,9 @@ PRODUCT_BOOT_JARS += WfdCommon
 endif
 
 DEVICE_MANIFEST_FILE := device/qcom/msm8937_64/manifest.xml
-ifeq ($(SHIPPING_API_LEVEL),29)
+ifeq ($(strip $(SHIPPING_API_LEVEL)), 30)
+    DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_5.xml
+else ifeq ($(strip $(SHIPPING_API_LEVEL)), 29)
     DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_4.xml
 else
     DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_3.xml
