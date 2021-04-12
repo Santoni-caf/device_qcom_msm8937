@@ -422,6 +422,14 @@ else
     DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/keymaster_ota.xml
 endif
 
+#Enable Metadata Encryption V2 and Adoptable storage support only for kernel 4.19 based devices
+ifeq ($(TARGET_KERNEL_VERSION), 4.19)
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.crypto.dm_default_key.options_format.version = 2 \
+    ro.crypto.volume.metadata.method = dm-default-key \
+    ro.crypto.volume.filenames_mode = "aes-256-cts"
+endif
+
 PRODUCT_PROPERTY_OVERRIDES += rild.libpath=/vendor/lib64/libril-qc-qmi-1.so
 PRODUCT_PROPERTY_OVERRIDES += vendor.rild.libpath=/vendor/lib64/libril-qc-qmi-1.so
 
