@@ -46,6 +46,11 @@ else
   android.hardware.graphics.allocator@2.0-impl \
   android.hardware.graphics.allocator@2.0-service \
   android.hardware.graphics.mapper@2.0-impl-2.1
+  #Power
+  PRODUCT_PACKAGES += \
+  android.hardware.power@1.0-service \
+  android.hardware.power@1.0-impl
+
 endif
 
 ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
@@ -362,11 +367,6 @@ PRODUCT_PACKAGES += \
 # Sensor HAL conf file
  PRODUCT_COPY_FILES += \
      device/qcom/msm8937_64/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
-
-# Power
-PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-service \
-    android.hardware.power@1.0-impl
 
 # Camera configuration file. Shared by passthrough/binderized camera HAL
 PRODUCT_PACKAGES += camera.device@3.2-impl
