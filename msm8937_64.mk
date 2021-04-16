@@ -376,9 +376,11 @@ PRODUCT_PACKAGES += \
      device/qcom/msm8937_64/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
 
 # Power
+ifeq (false,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
 PRODUCT_PACKAGES += \
     android.hardware.power@1.0-service \
     android.hardware.power@1.0-impl
+endif
 
 # Camera configuration file. Shared by passthrough/binderized camera HAL
 PRODUCT_PACKAGES += camera.device@3.2-impl
