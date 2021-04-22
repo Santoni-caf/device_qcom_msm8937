@@ -413,11 +413,20 @@ PRODUCT_PACKAGES += android.hardware.gatekeeper@1.0-impl \
                     android.hardware.keymaster@3.0-service
 endif
 
-#Enable KEYMASTER 4.0 for Android P not for OTA's
-ENABLE_KM_4_0 := true
+#Enable KM 4.1 for 4.19 kernel version
+ifeq ($(TARGET_KERNEL_VERSION), 4.19)
+ENABLE_KM_4_1 := true
+endif
 
-ifeq ($(ENABLE_KM_4_0), true)
-    DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/keymaster.xml
+#Enable KM 4.0 for 4.9 kernel version
+ifeq ($(TARGET_KERNEL_VERSION), 4.9)
+ENABLE_KM_4_0 := true
+endif
+
+ifeq ($(ENABLE_KM_4_1), true)
+    DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/keymaster_km41.xml
+else ifeq ($(ENABLE_KM_4_0), true)
+    DEVICE_MANIFEST_FILE += device/qcom/msm8937_32/keymaster_km4.xml
 else
     DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/keymaster_ota.xml
 endif
