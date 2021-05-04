@@ -297,6 +297,14 @@ PRODUCT_PACKAGES += android.hardware.media.omx@1.0-impl
 
 PRODUCT_PACKAGES += wcnss_service
 
+# SF properties
+ifeq ($(call math_gt,$(SHIPPING_API_LEVEL),29),true)
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
+    ro.surface_flinger.max_frame_buffer_acquired_buffers=3 \
+    ro.surface_flinger.max_virtual_display_dimension=4096
+endif
+
 # FBE support
 PRODUCT_COPY_FILES += \
     device/qcom/msm8937_64/init.qti.qseecomd.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qti.qseecomd.sh
