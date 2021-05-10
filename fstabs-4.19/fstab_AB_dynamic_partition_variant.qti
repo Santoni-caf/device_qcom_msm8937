@@ -37,7 +37,7 @@ system                                       /system          ext4    ro,barrier
 product                                      /product         ext4    ro,barrier=1,discard                        wait,slotselect,avb=vbmeta_system,logical,first_stage_mount
 vendor                                       /vendor          ext4    ro,barrier=1,discard                        wait,slotselect,avb,logical,first_stage_mount
 system_ext                                   /system_ext      ext4    ro,barrier=1,discard                        wait,slotselect,avb=vbmeta_system,logical,first_stage_mount
-/dev/block/by-name/metadata                  /metadata          ext4    noatime,nosuid,nodev,discard                         wait,formattable,first_stage_mount
+/dev/block/by-name/metadata                  /metadata          ext4    noatime,nosuid,nodev,discard                         wait,formattable,check,first_stage_mount
 /dev/block/bootdevice/by-name/userdata       /data              f2fs    noatime,nosuid,nodev,reserve_root=32768,resgid=1065,fsync_mode=nobarrier,discard,inlinecrypt  latemount,wait,formattable,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,metadata_encryption=aes-256-xts,keydirectory=/metadata/vold/metadata_encryption,quota,reservedsize=128M,checkpoint=fs
 /devices/soc/7864900.sdhci/mmc_host*         /storage/sdcard1   vfat    nosuid,nodev                                wait,voldmanaged=sdcard1:auto,noemulatedsd,encryptable=footer
 /devices/platform/soc/7864900.sdhci/mmc_host*         /storage/sdcard1   vfat    nosuid,nodev                                wait,voldmanaged=sdcard1:auto,noemulatedsd,encryptable=footer
