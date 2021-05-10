@@ -51,6 +51,11 @@ else
   android.hardware.graphics.allocator@2.0-impl \
   android.hardware.graphics.allocator@2.0-service \
   android.hardware.graphics.mapper@2.0-impl-2.1
+  #Power
+  PRODUCT_PACKAGES += \
+  android.hardware.power@1.0-service \
+  android.hardware.power@1.0-impl
+
 endif
 
 ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
