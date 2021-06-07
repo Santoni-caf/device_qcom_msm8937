@@ -18,6 +18,11 @@ else
   SHIPPING_API_LEVEL := 30
 endif
 
+ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),30))
+# Enable incremental FS feature
+PRODUCT_PROPERTY_OVERRIDES += ro.incremental.enable=1
+endif
+
 #### Turning BOARD_DYNAMIC_PARTITION_ENABLE flag to TRUE will enable dynamic partition/super image creation.
 # Enable Dynamic partitions only for Q new launch devices and beyond.
 ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
@@ -26,7 +31,6 @@ ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
   ENABLE_VIRTUAL_AB := true
   BOARD_DYNAMIC_PARTITION_ENABLE ?= true
   PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
-
   #Enable Light AIDL HAL
   PRODUCT_PACKAGES += android.hardware.lights-service.qti
   #Display/Graphics
@@ -34,8 +38,6 @@ ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
   vendor.qti.hardware.display.allocator-service \
   android.hardware.graphics.mapper@3.0-impl-qti-display \
   android.hardware.graphics.mapper@4.0-impl-qti-display
-  # Enable incremental FS feature
-  PRODUCT_PROPERTY_OVERRIDES += ro.incremental.enable=1
 else
   ENABLE_AB ?= false
   ENABLE_VIRTUAL_AB := false
@@ -225,7 +227,6 @@ PRODUCT_BOOT_JARS += WfdCommon
 endif
 
 DEVICE_MANIFEST_FILE := device/qcom/msm8937_64/manifest.xml
-
 ifeq ($(strip $(SHIPPING_API_LEVEL)), 30)
     DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_5.xml
 else ifeq ($(strip $(SHIPPING_API_LEVEL)), 29)
@@ -371,10 +372,16 @@ PRODUCT_COPY_FILES += \
      device/qcom/msm8937_64/powerhint.xml:system/etc/powerhint.xml
 
 #Healthd packages
-PRODUCT_PACKAGES += android.hardware.health@2.1-impl \
-                   android.hardware.health@2.1-service \
-                   android.hardware.health@2.1-impl.recovery \
-                   libhealthd.msm
+ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
+    PRODUCT_PACKAGES += android.hardware.health@2.1-impl \
+                        android.hardware.health@2.1-service \
+                        android.hardware.health@2.1-impl.recovery \
+                        libhealthd.msm
+else
+    PRODUCT_PACKAGES += android.hardware.health@2.0-impl \
+                        android.hardware.health@2.0-service \
+                        libhealthd.msm
+endif
 
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 
@@ -387,13 +394,6 @@ PRODUCT_PACKAGES += \
 # Sensor HAL conf file
  PRODUCT_COPY_FILES += \
      device/qcom/msm8937_64/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
-
-# Power
-ifeq (false,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
-PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-service \
-    android.hardware.power@1.0-impl
-endif
 
 # Camera configuration file. Shared by passthrough/binderized camera HAL
 PRODUCT_PACKAGES += camera.device@3.2-impl
@@ -465,6 +465,7 @@ PRODUCT_PACKAGES += update_engine \
                    update_engine_client \
                    update_verifier \
                    android.hardware.boot@1.1-impl-qti \
+                   bootctrl.msm8937 \
                    android.hardware.boot@1.1-impl-qti.recovery \
                    android.hardware.boot@1.1-service
 
