@@ -26,10 +26,10 @@ endif
 #### Turning BOARD_DYNAMIC_PARTITION_ENABLE flag to TRUE will enable dynamic partition/super image creation.
 # Enable Dynamic partitions only for Q new launch devices and beyond.
 ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
-  ENABLE_AB ?= true
+  ENABLE_AB ?= false
   # Enable virtual-ab by default
-  ENABLE_VIRTUAL_AB := true
-  BOARD_DYNAMIC_PARTITION_ENABLE ?= true
+  ENABLE_VIRTUAL_AB := false
+  BOARD_DYNAMIC_PARTITION_ENABLE ?= false
   PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
   #Enable Light AIDL HAL
   PRODUCT_PACKAGES += android.hardware.lights-service.qti
@@ -101,7 +101,7 @@ PRODUCT_PACKAGES += android.hardware.fastboot@1.0-impl-mock
 endif
 
 # Enable AVB 2.0
-BOARD_AVB_ENABLE := true
+BOARD_AVB_ENABLE := false
 ifeq ($(ENABLE_VIRTUAL_AB), true)
   $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 endif
@@ -384,11 +384,11 @@ PRODUCT_PACKAGES += \
     libandroid_net_32
 
 
-TARGET_SUPPORT_SOTER := true
+TARGET_SUPPORT_SOTER := false
 
 #set KMGK_USE_QTI_SERVICE to true to enable QTI KEYMASTER and GATEKEEPER HIDLs
 ifeq ($(ENABLE_VENDOR_IMAGE), true)
-KMGK_USE_QTI_SERVICE := true
+KMGK_USE_QTI_SERVICE := false
 endif
 
 #Enable AOSP KEYMASTER and GATEKEEPER HIDLs
@@ -401,12 +401,12 @@ endif
 
 #Enable KM 4.1 for 4.19 kernel version
 ifeq ($(TARGET_KERNEL_VERSION), 4.19)
-ENABLE_KM_4_1 := true
+ENABLE_KM_4_1 := false
 endif
 
 #Enable KM 4.0 for 4.9 kernel version
 ifeq ($(TARGET_KERNEL_VERSION), 4.9)
-ENABLE_KM_4_0 := true
+ENABLE_KM_4_0 := false
 endif
 
 ifeq ($(ENABLE_KM_4_1), true)
