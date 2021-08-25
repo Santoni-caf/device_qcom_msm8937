@@ -228,7 +228,7 @@ endif
 
 DEVICE_MANIFEST_FILE := device/qcom/msm8937_64/manifest.xml
 ifeq ($(strip $(SHIPPING_API_LEVEL)), 30)
-    DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_5.xml
+    DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_4.xml
 else ifeq ($(strip $(SHIPPING_API_LEVEL)), 29)
     DEVICE_MANIFEST_FILE += device/qcom/msm8937_64/manifest_target_level_4.xml
 else
