@@ -51,7 +51,7 @@ PRODUCT_PACKAGES += android.hardware.fastboot@1.0-impl-mock
 endif
 
 # Enable AVB 2.0
-BOARD_AVB_ENABLE := true
+BOARD_AVB_ENABLE := false
 
 ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
 # Enable product partition
@@ -231,8 +231,8 @@ PRODUCT_COPY_FILES += \
     device/qcom/msm8937_64/init.qti.qseecomd.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qti.qseecomd.sh
 
 # VB xml
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.software.verified_boot.xml:system/etc/permissions/android.software.verified_boot.xml
+#PRODUCT_COPY_FILES += \
+#    frameworks/native/data/etc/android.software.verified_boot.xml:system/etc/permissions/android.software.verified_boot.xml
 
 # MSM IRQ Balancer configuration file
 PRODUCT_COPY_FILES += \
@@ -383,7 +383,7 @@ SDM660_DISABLE_MODULE := true
 # below definitions are only required for AVB 1.0
 ifeq ($(BOARD_AVB_ENABLE),false)
 # dm-verity definitions
-  PRODUCT_SUPPORTS_VERITY := true
+  PRODUCT_SUPPORTS_VERITY := false
 endif
 
 # Enable vndk-sp Libraries
