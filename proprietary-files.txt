@@ -1,0 +1,4 @@
+# santoni Package version: santoni-user 7.1.2 N2G47H V11.0.2.0.NAMMIXM release-keys
+
+# ConsumerIR - from santoni
+lib64/hw/consumerir.default.so:vendor/lib64/hw/consumerir.default.so
